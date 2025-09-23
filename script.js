@@ -1,3 +1,21 @@
+// Wait until the DOM is fully loaded before running the code
+document.addEventListener('DOMContentLoaded', () => {
+  // Get references to the button and the band bio section
+  const toggleBioBtn = document.getElementById('toggleBioBtn');
+  const bandBio = document.getElementById('band-bio');
+
+  // Check if elements exist before adding event listener
+  if (toggleBioBtn && bandBio) {
+    toggleBioBtn.addEventListener('click', () => {
+      // If the bio is visible, hide it. If hidden, show it.
+      if (bandBio.style.display === 'none') {
+        bandBio.style.display = 'block';
+      } else {
+        bandBio.style.display = 'none';
+      }
+    });
+  }
+});
 // ----------------------------
 // 🎵 Setlist Generator
 // ----------------------------
@@ -11,6 +29,8 @@ const songs = [
   ];
   
   function generateSetlist() {
+    let shuffledsongs = songs.sort(()=>Math.random() - 0.5);
+    document.getElementById("setlist").innerHTML = shuffledsongs.map(songs => `<li>${songs}</li>`).join("");
 // Create generateSetList() function here
   }
   
@@ -25,10 +45,20 @@ const songs = [
   
   function updateCountdown() {
     // create variables define date
+    const now = new Date();
+    const diff = tourStart - now;
   
     if (diff <= 0) {
+      countdown.textContent = "The tour started!!"
+      clearInterval(timer);
+      return;
     // Create conditional for if statement under this line
     }
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60) % 60));
+    const seconds = Math.floor((diff / 1000) % 60);
+    countdown.textContent = `$(hours)h $(minutes)m $(seconds)s until Showtime!!`;
+   
   // convert time difference in milliseconds under this line
   // --------------
   // update the text on your webpage using interpolation under this line
