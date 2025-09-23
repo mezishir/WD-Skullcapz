@@ -4,15 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleBioBtn = document.getElementById('toggleBioBtn');
   const bandBio = document.getElementById('band-bio');
 
+  // Show the band bio by default
+  if (bandBio) {
+    bandBio.classList.remove('hidden');
+  }
   // Check if elements exist before adding event listener
   if (toggleBioBtn && bandBio) {
     toggleBioBtn.addEventListener('click', () => {
-      // If the bio is visible, hide it. If hidden, show it.
-      if (bandBio.style.display === 'none') {
-        bandBio.style.display = 'block';
-      } else {
-        bandBio.style.display = 'none';
-      }
+      // Toggle the 'hidden' class to show/hide the bio
+      bandBio.classList.toggle('hidden');
     });
   }
 });
