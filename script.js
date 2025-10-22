@@ -29,9 +29,31 @@ const songs = [
   ];
   
   function generateSetlist() {
-    let shuffledsongs = songs.sort(()=>Math.random() - 0.5);
-    document.getElementById("setlist").innerHTML = shuffledsongs.map(songs => `<li>${songs}</li>`).join("");
-// Create generateSetList() function here
+    // Fisher-Yates shuffle algorithm
+    const shuffledsongs = [...songs]; // Make a copy so we don't change the original
+    for (let i = shuffledsongs.length - 1; i > 0; i--) {
+      // Pick a random index from 0 to i
+      const j = Math.floor(Math.random() * (i + 1));
+      // Swap shuffledsongs[i] with shuffledsongs[j]
+      [shuffledsongs[i], shuffledsongs[j]] = [shuffledsongs[j], shuffledsongs[i]];
+    }
+    // Display the shuffled setlist with personality and styling
+    document.getElementById("setlist").innerHTML = shuffledsongs.map((song, idx, arr) => {
+      // First song: Opening Act
+      if (idx === 0) {
+        return `<li style="font-weight:bold;">🎤 Opening Act: ${song}</li>`;
+      }
+      // Last song: Encore
+      if (idx === arr.length - 1) {
+        return `<li style="color:#e63946;">🔥 Encore: ${song}</li>`;
+      }
+      // Songs with 'Shadow' in the title
+      if (song.includes("Shadow")) {
+        return `<li>💀 ${song}</li>`;
+      }
+      // Default styling
+      return `<li>${song}</li>`;
+    }).join("");
   }
   
   document.getElementById("generateSetlist").addEventListener("click", generateSetlist);
